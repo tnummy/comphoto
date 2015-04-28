@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+<div class="col-xs-2">
+</div>
+<div class="col-xs-2">
+<h1>Step 1:</h1>
+<h4 class="error"> {{ error }}</h4>
+<h4>Choose a picture...</h4>
+<ul>
+<form method="post" action="upload" enctype="multipart/form-data">
+<input type="file" name="photo" onchange="javascript:this.form.submit();"/></br></br>
+<!-- <button type="submit">Upload</button> -->
+</form>
+</ul>
+</div>
+</div>
+
+{% endblock %}

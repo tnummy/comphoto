@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+<div class="col-xs-2">
+</div>
+<div class="col-xs-2">
+<form action="/">
+<button type="submit">Start Over</button>
+</form>
+<h3>Step 3:</h3>
+<form action="/result/{{ name }}">
+<button type="submit">Try again</button>
+</form>
+</div>
+<div class="col-xs-4">
+<h1>Image has been converted.</h1>
+<h4>Converted preview:</h4>
+<img src="{{ url_for('static', filename = path) }}" width="500px" alt="Image Result">
+<p><b>hint:</b> right click and 'save image as' or 'drag and drop' to desktop to download. </p>
+</div>
+</div>
+{% endblock %}

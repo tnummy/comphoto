@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+<div class="col-xs-2">
+</div>
+<div class="col-xs-2">
+<form action="/">
+<button type="submit">Start Over</button>
+</form>
+<h3>Step 2:</h3>
+<form method="post" action="/convert/gray/{{ name }}">
+<button type="submit">Convert to Grayscale</button>
+</form>
+</br>
+<form method="post" action="/convert/invert/{{ name }}">
+<button type="submit">Invert</button>
+</form>
+</br>
+<form method="post" action="/convert/sharpen/{{ name }}">
+<button type="submit">Sharpen</button>
+</form>
+</br>
+<form method="post" action="/convert/contrast/{{ name }}">
+<button type="submit">Autocontrast</button>
+</form>
+</br>
+<form method="post" action="/convert/equalize/{{ name }}">
+<button type="submit">Equalize</button>
+</form>
+</br>
+<form method="post" action="/convert/solarize/{{ name }}">
+<button type="submit">Solarize</button>
+</form>
+
+</div>
+<div class="col-xs-4">
+
+<h1>Image has been uploaded.</h1>
+<h4>Uploaded preview:</h4>
+<img src="{{ url_for('static', filename = path) }}" width="500px" alt="Image Result">
+</br></br>
+
+
+
+</div>
+</div>
+{% endblock %}
