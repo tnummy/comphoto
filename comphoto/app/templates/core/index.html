@@ -2,18 +2,90 @@
 {% block body %}
 
 <div class="row">
-<div class="col-xs-2">
+<div class="col-md-2">
 </div>
-<div class="col-xs-2">
-<h1>Step 1:</h1>
-<h4 class="error"> {{ error }}</h4>
+<div class="col-md-6">
+<h2>Step 1:</h2>
+<h4 class="text-danger"> {{ error }}</h4>
 <h4>Choose a picture...</h4>
 <ul>
-<form method="post" action="upload" enctype="multipart/form-data">
+<form method="post" action="/upload" enctype="multipart/form-data">
 <input type="file" name="photo" onchange="javascript:this.form.submit();"/></br></br>
 <!-- <button type="submit">Upload</button> -->
 </form>
 </ul>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-2" style="{{ hidden }}">
+<!-- <form action="/">
+<button type="submit">Start Over</button>
+</form> -->
+<h2>Step 2:</h2>
+<h4>Choose a style...</h4>
+<form method="post" action="/convert/gray/{{ name }}">
+<button type="submit">Convert to Grayscale</button>
+</form>
+</br>
+<form method="post" action="/convert/invert/{{ name }}">
+<button type="submit">Invert</button>
+</form>
+</br>
+<form method="post" action="/convert/sharpen/{{ name }}">
+<button type="submit">Sharpen</button>
+</form>
+</br>
+<form method="post" action="/convert/contrast/{{ name }}">
+<button type="submit">Autocontrast</button>
+</form>
+</br>
+<form method="post" action="/convert/equalize/{{ name }}">
+<button type="submit">Equalize</button>
+</form>
+</br>
+<form method="post" action="/convert/solarize/{{ name }}">
+<button type="submit">Solarize</button>
+</form>
+</br>
+<form method="post" action="/result/{{ name }}">
+<button type="submit">Original</button>
+</form>
+
+</div>
+<div class="col-md-4">
+
+<!-- <h1>Image has been uploaded.</h1> -->
+<!-- <h4>Uploaded preview:</h4> -->
+</br></br></br>
+<img src="{{ url_for('static', filename = path) }}" style="width:100%;max-width:500px;" alt="Image Result">
+<p style="{{ hidden }}"><b>hint:</b> right click and 'save image as' or 'drag and drop' to desktop to download. </p>
+
+
+
+
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-2" style="{{ hidden }}">
+<!-- <form action="/">
+<button type="submit">Start Over</button>
+</form> -->
+
+<h2>Step 3:</h2>
+<h4>Share and Like this page...</h4>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+</br></br>
 </div>
 </div>
 

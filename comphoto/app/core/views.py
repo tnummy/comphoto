@@ -11,7 +11,7 @@ from PIL import  Image, ImageChops, ImageFilter, ImageOps
 mod = Blueprint('core', __name__)
 @mod.route('/')
 def index():
-  return (render_template('core/index.html'))
+  return (render_template('core/index.html', path='siteimages/loading.gif', hidden='visibility:hidden;'))
 
 @mod.route('/convert/<action>/<image_name>', methods=['GET', 'POST'])
 def convert(action,image_name):
@@ -21,31 +21,36 @@ def convert(action,image_name):
   # return (render_template('core/convert.html', path=image_path, name=image_name))
 
   # return action
-  if action == "gray":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name).convert('L')
-  elif action == "invert":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name)
-      img = ImageChops.invert(img)
-  elif action == "sharpen":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name).filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
-  elif action == "contrast":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name)
-      img = ImageOps.autocontrast(img, cutoff=5, ignore=None)
-  elif action == "equalize":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name)
-      img = ImageOps.equalize(img, mask=None)
-  elif action == "solarize":
-      img = Image.open(UPLOAD_FOLDER + '/' + image_name)
-      img = ImageOps.solarize(img, threshold=128)
-  filename = str(time.time()) + image_name
-  img.save(SAVE_FOLDER + '/' + filename)
-  image_path = 'results/' + filename
-  return (render_template('core/convert.html', path=image_path, name=image_name))
+  if not image_name:
+      return (redirect('/'))
+  else: 
+      if action == "gray":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name).convert('L')
+      elif action == "invert":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name)
+          img = ImageChops.invert(img)
+      elif action == "sharpen":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name).filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
+      elif action == "contrast":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name)
+          img = ImageOps.autocontrast(img, cutoff=5, ignore=None)
+      elif action == "equalize":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name)
+          img = ImageOps.equalize(img, mask=None)
+      elif action == "solarize":
+          img = Image.open(UPLOAD_FOLDER + '/' + image_name)
+          img = ImageOps.solarize(img, threshold=128)
+      url = "/convert/"+action+"/"+image_name
+      filename = str(time.time()) + image_name
+      img.save(SAVE_FOLDER + '/' + filename)
+      image_path = 'results/' + filename
+      return (render_template('core/index.html', path=image_path, name=image_name, url=url))
 
-@mod.route('/result/<image_name>')
+@mod.route('/result/<image_name>', methods=['GET', 'POST'])
 def images(image_name):
   image_path = 'uploads/'+image_name
-  return (render_template('core/result.html', path=image_path, name=image_name))
+  url = "/result/"+image_name
+  return (render_template('core/index.html', path=image_path, name=image_name, url=url))
 
 @mod.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -53,15 +58,15 @@ def upload():
         file = request.files['photo']
         if file:
             if allowed_file(file.filename):
-                filename = str(time.time())+secure_filename(file.filename)
+                filename = "comphoto"+str(time.time())+secure_filename(file.filename)
                 file.save(os.path.join(UPLOAD_FOLDER, filename))
                 return redirect("/result/"+filename)
             else:
               error = "Picture must be a jpg | jpeg | png | gif | bmp file type."
-              return (render_template('core/index.html', error=error))
+              return (render_template('core/index.html', error=error, path='siteimages/loading.gif', hidden='visibility:hidden;'))
         else:
             error = "Please choose a picture to upload."
-            return (render_template('core/index.html', error=error))
+            return (render_template('core/index.html', error=error, path='siteimages/loading.gif', hidden='visibility:hidden;'))
     else: 
         return (redirect('/'))
 
