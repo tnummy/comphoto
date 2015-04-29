@@ -2,9 +2,17 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:url"                content="http://comphoto.timnummyphotography.com{{ url }}" />
+	<meta property="og:title"              content="Convert-a-picture-o-matic" />
+	<meta property="og:description"        content="Simple image editor project. Try it!" />
+	<meta property="og:image"              content="http://comphoto.timnummyphotography.com{{ url_for('static', filename = path) }}" />
+	<meta property="og:site_name"          content="ComPhoto" />
+	<meta property="og:type"               content="article" />
+	<meta property="fb:app_id"             content="1595869790630875" />
     <title>Convert-a-picture-o-matic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'siteimages/favicon.ico') }}">
 </head>
 
     {% block layout %}{% endblock %}
